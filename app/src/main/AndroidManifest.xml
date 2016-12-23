@@ -2,6 +2,9 @@
 <manifest package="com.tretton.app"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:name="com.tretton.app.BaseApplication"
         android:allowBackup="true"
@@ -9,13 +12,38 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".flows.splashscreen.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name="com.tretton.app.flows.mainscreen.MainScreenWithTwitterCode"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+
+        <activity
+            android:name="com.tretton.app.flows.mainscreen.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="cef2ce5e5b8480a43c20bf5d44765758cfd89219"/>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

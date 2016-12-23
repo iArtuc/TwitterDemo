@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TwitterDemo</string>
+    <string name="WithTwitterCode">With Twitter Code</string>
+    <string name="WithRetrofit">With Retrofit</string>
 </resources>

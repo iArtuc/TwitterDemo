@@ -9,10 +9,17 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
@@ -95,6 +102,9 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:3.2.0"
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile('com.twitter.sdk.android:twitter:2.3.1@aar') {
+        transitive = true;
+    }
 
 }
 

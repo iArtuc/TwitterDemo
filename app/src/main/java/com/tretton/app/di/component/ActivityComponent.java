@@ -13,4 +13,5 @@ import dagger.Subcomponent;
 public interface ActivityComponent extends BaseActivityComponent
 {
     FragmentComponent plus(FragmentModule fragmentModule);
+
 }
