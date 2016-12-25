@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.squareup.otto.Bus;
 import com.squareup.picasso.Picasso;
 import com.tretton.app.R;
+import com.tretton.app.events.TweetClicked;
 import com.tretton.app.ui.CircleStrokeTransformation;
 import com.twitter.sdk.android.core.models.Tweet;
 
@@ -76,7 +77,6 @@ public class TweetListRecycleViewAdapter extends RecyclerView.Adapter<RecyclerVi
         View v1 = inflater.inflate(R.layout.custom_tweet_item, viewGroup, false);
         viewHolder = new ViewHolderTweetListCustomItem(v1);
 
-
         return viewHolder;
     }
 
@@ -99,26 +99,25 @@ public class TweetListRecycleViewAdapter extends RecyclerView.Adapter<RecyclerVi
                                                       final int position)
     {
 
-        vh1.getUserName().setText(items.get(position).user.screenName);
-        vh1.getUserAccount().setText(getTweeterUserName(items.get(position)));
-        vh1.getUserTweetTime().setText(timeConverter(items.get(position).createdAt));
-        vh1.getUserTweet().setText(getClearTweet(items.get(position)));
-        picasso.load(items.get(position).user.profileBackgroundImageUrl).transform(new
-                CircleStrokeTransformation(getContext(), getContext().getResources().getColor(R
-                .color.DarkGray), 3)).error(R.drawable.tw__ic_logo_default).into
-                (vh1.getUserPic());
-
-        String tweetMedia = getTweetMediaUrl(items.get(position));
-        if (tweetMedia.length() > 0)
+        if (items.get(position).retweetedStatus == null)
         {
-            vh1.getUserMediaHolder().setVisibility(View.VISIBLE);
-            picasso.load(tweetMedia).error(R.drawable.tw__ic_logo_default).into
-                    (vh1.getUserMedia());
+            vh1.getUserRetweet().setVisibility(View.GONE);
+            setTweetData(vh1, items.get(position));
         } else
         {
-            vh1.getUserMediaHolder().setVisibility(View.GONE);
+            vh1.getUserRetweet().setVisibility(View.VISIBLE);
+            vh1.getUserRetweet().setText("Retweeted by " + items.get(position).user.name);
+            setTweetData(vh1, items.get(position).retweetedStatus);
         }
 
+        vh1.getUserTweetRoot().setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                bus.post(new TweetClicked(items.get(position)));
+            }
+        });
 
         return null;
     }
@@ -136,11 +135,8 @@ public class TweetListRecycleViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private String getClearTweet(Tweet tweet)
     {
-        if (tweet.entities == null || tweet.entities.media == null)
-        {
-            return "";
-        }
-        if (tweet.entities.media.size() == 0)
+        if (tweet.entities == null || tweet.entities.media == null || tweet.entities.media.size()
+                == 0)
         {
             return tweet.text;
         }
@@ -150,7 +146,31 @@ public class TweetListRecycleViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private String getTweeterUserName(Tweet tweet)
     {
-        return "@" + tweet.user.name;
+        return "@" + tweet.user.screenName;
+    }
+
+    private void setTweetData(ViewHolderTweetListCustomItem vh1, Tweet tweet)
+    {
+        vh1.getUserName().setText(tweet.user.name);
+        vh1.getUserAccount().setText(getTweeterUserName(tweet));
+        vh1.getUserTweetTime().setText(timeConverter(tweet.createdAt));
+        vh1.getUserTweet().setText(getClearTweet(tweet));
+        picasso.load(tweet.user.profileImageUrlHttps).transform(new
+                CircleStrokeTransformation(getContext(), getContext().getResources().getColor(R
+                .color.DarkGray), 0)).error(R.drawable.error_icon).into
+                (vh1.getUserPic());
+
+        String tweetMedia = getTweetMediaUrl(tweet);
+        if (tweetMedia.length() > 0)
+        {
+            vh1.getUserMediaHolder().setVisibility(View.VISIBLE);
+            picasso.load(tweetMedia).error(R.drawable.error_icon).into
+                    (vh1.getUserMedia());
+        } else
+        {
+            vh1.getUserMediaHolder().setVisibility(View.GONE);
+        }
+
     }
 
 }

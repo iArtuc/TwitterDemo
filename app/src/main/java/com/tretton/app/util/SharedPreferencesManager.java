@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 
 import com.tretton.app.BaseApplication;
 
-/**
- * Created by Arutha-PC on 9/6/2016.
- */
 public class SharedPreferencesManager
 {
     SharedPreferences sharedPreferences;

@@ -5,6 +5,7 @@ import com.tretton.app.di.scopes.ActivityScope;
 import com.tretton.app.flows.mainscreen.presenter.MainActivityPresenter;
 import com.tretton.app.flows.mainscreen.presenter.MainActivityPresenterImpl;
 import com.tretton.app.restservice.RestService;
+import com.tretton.app.util.SharedPreferencesManager;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,9 +15,9 @@ public class ActivityPresenterModule
 {
     @Provides
     @ActivityScope
-    public MainActivityPresenter provideMainActivityPresenter(RestService restService)
+    public MainActivityPresenter provideMainActivityPresenter(RestService restService,SharedPreferencesManager sharedPreferencesManager)
     {
-        return new MainActivityPresenterImpl(restService);
+        return new MainActivityPresenterImpl(restService, sharedPreferencesManager);
     }
 
 }

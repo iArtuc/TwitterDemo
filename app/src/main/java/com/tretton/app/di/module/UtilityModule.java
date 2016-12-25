@@ -10,6 +10,7 @@ import com.tretton.app.BuildConfig;
 import com.tretton.app.BusinessService;
 import com.tretton.app.di.Names;
 import com.tretton.app.restservice.RestService;
+import com.tretton.app.util.SharedPreferencesManager;
 
 import java.util.concurrent.Executors;
 
@@ -49,9 +50,16 @@ public class UtilityModule
 
     @Provides
     @Singleton
-    public BusinessService provideBusinessService(RestService restService)
+    public BusinessService provideBusinessService()
     {
-        return new BusinessService(restService);
+        return new BusinessService();
+    }
+
+    @Provides
+    @Singleton
+    public SharedPreferencesManager provideSharedPreferencesManager(BaseApplication application)
+    {
+        return new SharedPreferencesManager(application);
     }
 
 }

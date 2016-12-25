@@ -9,6 +9,8 @@ import java.util.List;
 public interface MainActivityView extends BaseView
 {
     void setTweets(List<Tweet> body);
+
+    void requestFailed();
 //    void getAnonymousIDFailure();
 }
 

@@ -6,9 +6,11 @@ import com.tretton.app.flows.mainscreen.view.MainActivityView;
 
 public interface MainActivityPresenter extends BasePresenter<MainActivityView>
 {
+
+    void getUserToken();
+
+    void getOAuth();
+
     void getTweets();
-
-//    void getAnonymousID();
-
 
 }

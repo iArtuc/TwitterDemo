@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGrey"
     tools:context="com.tretton.app.flows.mainscreen.MainActivity">
 
+    <include layout="@layout/toolbar"/>
 
     <ProgressBar
         android:id="@+id/pb_activity_main_loading"
@@ -23,14 +25,21 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_activity_main_tweet_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_activity_main_tweet_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="10dp"/>
+            android:clipToPadding="false"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <FrameLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/fl_activity_main_fragment_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"></FrameLayout>
 
 </RelativeLayout>

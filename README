@@ -1,0 +1,59 @@
+This is a demo project, which uses twitter kit and api.
+
+--------------------
+    Architecture
+--------------------
+
+I have used MVP design pattern with DAGGER 2.
+The Architecture contains some of my default classes like base folder, base application , base
+activity and etc.
+
+--------------------------------
+    Third party Libraries
+--------------------------------
+
+I used Retrofit 2 for restful service calls
+Dagger 2 for dependency injection
+Butterknife for binding views.
+RxJava for MultipleThread organization.
+Timber for logging.
+Otto for event buses.
+Picasso for image caching/downloading
+Twitter for twitter...
+
+
+------------------
+    Callbacks
+------------------
+
+I usually handle them with interfaces but in some cases Otto bus will come more handy.
+The tweet click part could be done with interface as well , i used bus just to show using it.
+
+--------------------------------------
+I tried to add as many things i can without over-engineering it. But it was an assignment so i
+tried to show you as much as i can within the projects limitations.
+
+There are easier ways to do it. i used twitter kit just to show it.
+Also there are thing that i could have done it without using them(project was small and not very
+functional), dagger etc. I tried to use everything that can be used in this project.
+
+--------------------------------------
+Project starts with 2 buttons which will lead you to a easy way with twitter code. and the ninja
+way with hardcoded one.
+
+di folder is mostly needed in huge projects with lots of classes and activities etc.
+base folder is mostly for handling network connection ,showing errors, showing loading etc.
+event folder is holding the event classes that Otto uses.
+flow folder is holds the screens which has mvp style folders views, models and presenters.
+restService  is holding the
+
+Building flavors for seperation the endpoints and releases, (no need in this project but if it
+has multiple endpoint like dev and prod it will be usefull).
+
+
+
+
+
+
+
+

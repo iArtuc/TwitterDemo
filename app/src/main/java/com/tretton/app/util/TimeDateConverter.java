@@ -16,7 +16,7 @@ public class TimeDateConverter
             testDate = sdf.parse(date);
         } catch (Exception ex)
         {
-            return "00:00";
+            return "";// can be changed to something else error case
         }
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd", Locale.US);
         String newFormat = formatter.format(testDate);

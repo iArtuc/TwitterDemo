@@ -3,6 +3,7 @@ package com.tretton.app.flows.mainscreen.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.tretton.app.R;
@@ -27,6 +28,8 @@ public class ViewHolderTweetListCustomItem extends RecyclerView.ViewHolder
     CustomTextView userTweetTime;
     @BindView(R.id.txt_custom_tweet_item_user_tweet)
     CustomTextView userTweet;
+    @BindView(R.id.txt_custom_tweet_item_user_retweet)
+    CustomTextView userRetweet;
 
 
     @BindView(R.id.iv_custom_tweet_item_user_pic)
@@ -34,9 +37,12 @@ public class ViewHolderTweetListCustomItem extends RecyclerView.ViewHolder
     @BindView(R.id.iv_custom_tweet_item_user_media)
     ImageView userMedia;
 
-
     @BindView(R.id.rl_custom_tweet_item_user_media_holder)
     RelativeLayout userMediaHolder;
+
+
+    @BindView(R.id.ll_custom_tweet_item_root)
+    LinearLayout userTweetRoot;
 
     public ViewHolderTweetListCustomItem(View v)
     {
@@ -79,6 +85,16 @@ public class ViewHolderTweetListCustomItem extends RecyclerView.ViewHolder
     public RelativeLayout getUserMediaHolder()
     {
         return userMediaHolder;
+    }
+
+    public CustomTextView getUserRetweet()
+    {
+        return userRetweet;
+    }
+
+    public LinearLayout getUserTweetRoot()
+    {
+        return userTweetRoot;
     }
 }
 

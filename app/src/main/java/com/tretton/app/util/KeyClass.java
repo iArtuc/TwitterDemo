@@ -5,6 +5,7 @@ package com.tretton.app.util;
  */
 public final class KeyClass
 {
+    public static final String USER_TOKEN = "UserToken";
     public static final String USER_INFO = "UserInfo";
 
     private KeyClass()

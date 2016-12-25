@@ -1,16 +1,25 @@
 package com.tretton.app;
 
-import com.tretton.app.restservice.RestService;
+
+import com.twitter.sdk.android.core.models.Tweet;
 
 public class BusinessService
 {
 
-    private RestService restService;
 
-    public BusinessService(RestService restService)
+    private Tweet selectedTweet;
+
+    public BusinessService()
     {
-        this.restService = restService;
     }
 
+    public Tweet getSelectedTweet()
+    {
+        return selectedTweet;
+    }
 
+    public void setSelectedTweet(Tweet selectedTweet)
+    {
+        this.selectedTweet = selectedTweet;
+    }
 }

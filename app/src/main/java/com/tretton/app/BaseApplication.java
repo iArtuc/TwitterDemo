@@ -7,17 +7,12 @@ import com.tretton.app.di.component.BaseAppComponent;
 import com.tretton.app.di.component.DaggerAppComponent;
 import com.tretton.app.di.module.AppModule;
 import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterSession;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
 import static com.tretton.app.util.Constants.TWITTER_KEY;
