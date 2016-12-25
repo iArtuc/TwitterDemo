@@ -38,7 +38,6 @@ public class MainActivityPresenterImpl implements MainActivityPresenter
     @Override
     public void getTweets()
     {
-
         try
         {
             restService.getToken("Basic " + getBase64String(TOKEN_CREDENTIALS),
@@ -73,6 +72,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter
             public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response)
             {
                 Timber.d("test");
+                mainActivityView.setTweets(response.body());
             }
 
             @Override

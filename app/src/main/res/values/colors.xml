@@ -164,4 +164,6 @@
 
     <color name="CircleBackground">#f8e7ba</color>
     <color name="FacebookLightBlue">#548AC1</color>
+    <color name="text_color_dark">#292f33</color>
+    <color name="text_color_light">#8899a6</color>
 </resources>

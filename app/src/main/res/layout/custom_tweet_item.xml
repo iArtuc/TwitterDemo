@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_custom_tweet_item_user_pic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tretton.app.ui.CustomTextView
+                    android:id="@+id/txt_custom_tweet_item_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ilkin artuc"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="14sp"
+                    app:typeface="medium"/>
+
+                <com.tretton.app.ui.CustomTextView
+                    android:id="@+id/txt_custom_tweet_item_user_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/txt_custom_tweet_item_user_name"
+                    android:text="ilkin artuc"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="13sp"
+                    app:typeface="light"/>
+
+                <com.tretton.app.ui.CustomTextView
+                    android:id="@+id/txt_custom_tweet_item_user_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="ilkin artuc"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp"
+                    app:typeface="light"/>
+
+            </RelativeLayout>
+
+            <com.tretton.app.ui.CustomTextView
+                android:id="@+id/txt_custom_tweet_item_user_tweet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_dark"
+                android:textSize="15sp"
+                app:typeface="light"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_custom_tweet_item_user_media_holder"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                android:background="@color/text_color_light">
+
+                <ImageView
+                    android:id="@+id/iv_custom_tweet_item_user_media"
+                    android:layout_width="match_parent"
+                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
