@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 import com.squareup.picasso.Picasso;
@@ -56,17 +57,12 @@ public class TweetDetailFragment extends BaseFragment implements TweetDetailView
     CustomTextView userTweet;
     @BindView(R.id.txt_tweet_list_fragment_user_retweet)
     CustomTextView userRetweet;
-
-
     @BindView(R.id.iv_tweet_list_fragment_user_pic)
     ImageView userPic;
     @BindView(R.id.iv_tweet_list_fragment_user_media)
     ImageView userMedia;
-
     @BindView(R.id.rl_tweet_list_fragment_user_media_holder)
     RelativeLayout userMediaHolder;
-
-
     @BindView(R.id.txt_tweet_list_fragment_tweet_retweet_count)
     CustomTextView reTweetCount;
 
@@ -88,76 +84,25 @@ public class TweetDetailFragment extends BaseFragment implements TweetDetailView
         if (businessService.getSelectedTweet().retweetedStatus == null)
         {
             getUserRetweet().setVisibility(View.GONE);
-            setLayoutData(businessService.getSelectedTweet());
+            presenter.setTweetData(businessService.getSelectedTweet());
+//            setLayoutData(businessService.getSelectedTweet());
         } else
         {
             getUserRetweet().setVisibility(View.VISIBLE);
             getUserRetweet().setText("Retweeted by " + businessService.getSelectedTweet().user.name);
-            setLayoutData(businessService.getSelectedTweet().retweetedStatus);
+            presenter.setTweetData(businessService.getSelectedTweet().retweetedStatus);
+//            setLayoutData(businessService.getSelectedTweet().retweetedStatus);
         }
 
+        presenter.setLayoutData();
 
         return view;
-    }
-
-    private void setLayoutData(Tweet selectedTweet)
-    {
-        getUserName().setText(selectedTweet.user.name);
-        getUserAccount().setText(getTweeterUserName(selectedTweet));
-        getUserTweetTime().setText(timeConverter(selectedTweet.createdAt));
-        getUserTweet().setText(getClearTweet(selectedTweet));
-        picasso.load(selectedTweet.user.profileImageUrlHttps).transform(new
-                CircleStrokeTransformation(getContext(), getContext().getResources().getColor(R
-                .color.DarkGray), 0)).error(R.drawable.error_icon).into
-                (getUserPic());
-
-        String tweetMedia = getTweetMediaUrl(selectedTweet);
-        if (tweetMedia.length() > 0)
-        {
-            getUserMediaHolder().setVisibility(View.VISIBLE);
-            picasso.load(tweetMedia).error(R.drawable.error_icon).into
-                    (getUserMedia());
-        } else
-        {
-            getUserMediaHolder().setVisibility(View.GONE);
-        }
-
-        getReTweetCount().setText(String.valueOf(selectedTweet.retweetCount));
-
-
     }
 
     private void showError()
     {
         errorHolder.setVisibility(View.VISIBLE);
         errorHolder.bringToFront();
-    }
-
-    private String getTweetMediaUrl(Tweet tweet)
-    {
-
-        if (tweet.entities == null || tweet.entities.media == null)
-        {
-            return "";
-        }
-
-        return tweet.entities.media.get(0).mediaUrlHttps;
-    }
-
-    private String getClearTweet(Tweet tweet)
-    {
-        if (tweet.entities == null || tweet.entities.media == null || tweet.entities.media.size()
-                == 0)
-        {
-            return tweet.text;
-        }
-        String result = tweet.text.replace(tweet.entities.media.get(0).url, "");
-        return result;
-    }
-
-    private String getTweeterUserName(Tweet tweet)
-    {
-        return "@" + tweet.user.screenName;
     }
 
     @Override
@@ -227,4 +172,62 @@ public class TweetDetailFragment extends BaseFragment implements TweetDetailView
         return reTweetCount;
     }
 
+    @Override
+    public void setUserName(String name)
+    {
+        getUserName().setText(name);
+    }
+
+    @Override
+    public void setUserScreenName(String screenName)
+    {
+        getUserAccount().setText(screenName);
+    }
+
+    @Override
+    public void setTweetTime(String tweetTime)
+    {
+        getUserTweetTime().setText(tweetTime);
+    }
+
+    @Override
+    public void setTweet(String tweet)
+    {
+        getUserTweet().setText(tweet);
+    }
+
+    @Override
+    public void setUserPicture(String pictureURL)
+    {
+        picasso.load(pictureURL).transform(new
+                CircleStrokeTransformation(getContext(), getContext().getResources().getColor(R
+                .color.DarkGray), 0)).error(R.drawable.error_icon).into
+                (getUserPic());
+    }
+
+    @Override
+    public void setMediaPicture(String mediaPictureUrl)
+    {
+        if (mediaPictureUrl.length() > 0)
+        {
+            getUserMediaHolder().setVisibility(View.VISIBLE);
+            picasso.load(mediaPictureUrl).error(R.drawable.error_icon).into
+                    (getUserMedia());
+        } else
+        {
+            getUserMediaHolder().setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setreTweetCount(String tweetCount)
+    {
+        getReTweetCount().setText(tweetCount);
+    }
+
+    @Override
+    public void error()
+    {
+        Toast.makeText(getContext(), getResources().getString(R.string.error), Toast.LENGTH_LONG).show();
+    }
 }

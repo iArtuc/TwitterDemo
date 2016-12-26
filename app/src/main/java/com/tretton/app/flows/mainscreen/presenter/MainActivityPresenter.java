@@ -13,4 +13,6 @@ public interface MainActivityPresenter extends BasePresenter<MainActivityView>
 
     void getTweets();
 
+    void getTweetsFrom(String userToken);
+
 }

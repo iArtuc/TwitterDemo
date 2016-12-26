@@ -13,12 +13,13 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import rx.Observable;
 
 public interface RestService
 {
 
     @GET("/1.1/statuses/user_timeline.json")
-    Call<List<Tweet>> getUserTimeline(
+    Observable<List<Tweet>> getUserTimeline(
             @Header("Authorization") String authorization,
             @Query("screen_name") String screenName,
             @Query("count") int count
@@ -26,7 +27,7 @@ public interface RestService
 
     @FormUrlEncoded
     @POST("/oauth2/token")
-    Call<TwitterTokenObj> getToken(
+    Observable<TwitterTokenObj> getToken(
             @Header("Authorization") String authorization,
             @Field("grant_type") String grantType
     );

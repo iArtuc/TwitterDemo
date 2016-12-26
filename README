@@ -15,7 +15,7 @@ activity and etc.
 I used Retrofit 2 for restful service calls
 Dagger 2 for dependency injection
 Butterknife for binding views.
-RxJava for MultipleThread organization.
+RxJava for MultipleThread organization and handling service calls.
 Timber for logging.
 Otto for event buses.
 Picasso for image caching/downloading

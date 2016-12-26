@@ -5,20 +5,18 @@ import com.tretton.app.flows.mainscreen.view.MainActivityView;
 import com.tretton.app.restservice.RestService;
 import com.tretton.app.restservice.models.TwitterTokenObj;
 import com.tretton.app.util.KeyClass;
+import com.tretton.app.util.SchedulerHolder;
 import com.tretton.app.util.SharedPreferencesManager;
+import com.tretton.app.util.Util;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import timber.log.Timber;
+import rx.Subscriber;
 
 import static com.tretton.app.util.Constants.TOKEN_CREDENTIALS;
 import static com.tretton.app.util.KeyClass.USER_TOKEN;
-import static com.tretton.app.util.Util.getBase64String;
 
 public class MainActivityPresenterImpl implements MainActivityPresenter
 {
@@ -26,11 +24,16 @@ public class MainActivityPresenterImpl implements MainActivityPresenter
     private RestService restService;
     private SharedPreferencesManager sharedPreferencesManager;
     private String userToken = null;
+    private SchedulerHolder schedulerHolder;
+    private Util util;
 
-    public MainActivityPresenterImpl(RestService restService, SharedPreferencesManager sharedPreferencesManager)
+    public MainActivityPresenterImpl(RestService restService, SharedPreferencesManager
+            sharedPreferencesManager, SchedulerHolder schedulerHolder)
     {
         this.restService = restService;
         this.sharedPreferencesManager = sharedPreferencesManager;
+        this.schedulerHolder = schedulerHolder;
+        util = new Util();
     }
 
     @Override
@@ -60,29 +63,31 @@ public class MainActivityPresenterImpl implements MainActivityPresenter
     {
         try
         {
-            restService.getToken("Basic " + getBase64String(TOKEN_CREDENTIALS),
-                    "client_credentials").enqueue(new Callback<TwitterTokenObj>()
+            restService.getToken("Basic " + util.getBase64String(TOKEN_CREDENTIALS),
+                    "client_credentials").subscribeOn(schedulerHolder.getWorkerScheduler())
+                    .observeOn(schedulerHolder.getMainScheduler()).subscribe(new Subscriber<TwitterTokenObj>()
             {
                 @Override
-                public void onResponse(Call<TwitterTokenObj> call, Response<TwitterTokenObj> response)
+                public void onCompleted()
                 {
 
-                    if (response.body() == null || response.errorBody() != null)
-                    {
-                        mainActivityView.requestFailed();
-                        return;
-                    }
-                    userToken = "Bearer " + response.body().accessToken;
-                    sharedPreferencesManager.putString(KeyClass.USER_TOKEN, userToken);
-                    getTweetsFrom(userToken);
                 }
 
                 @Override
-                public void onFailure(Call<TwitterTokenObj> call, Throwable t)
+                public void onError(Throwable e)
                 {
                     mainActivityView.requestFailed();
                 }
+
+                @Override
+                public void onNext(TwitterTokenObj twitterTokenObj)
+                {
+                    userToken = "Bearer " + twitterTokenObj.accessToken;
+                    sharedPreferencesManager.putString(KeyClass.USER_TOKEN, userToken);
+                    getTweetsFrom(userToken);
+                }
             });
+
         } catch (UnsupportedEncodingException e)
         {
             mainActivityView.requestFailed();
@@ -96,27 +101,28 @@ public class MainActivityPresenterImpl implements MainActivityPresenter
         getTweetsFrom(userToken);
     }
 
-    private void getTweetsFrom(String accessToken)
+    public void getTweetsFrom(String accessToken)
     {
 
-        restService.getUserTimeline(accessToken, "tretton37", 20).enqueue(new Callback<List<Tweet>>()
+        restService.getUserTimeline(accessToken, "tretton37", 20).subscribeOn(schedulerHolder.getWorkerScheduler())
+                .observeOn(schedulerHolder.getMainScheduler()).subscribe(new Subscriber<List<Tweet>>()
         {
             @Override
-            public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response)
+            public void onCompleted()
             {
-                if (response.body() == null || response.errorBody() != null)
-                {
-                    getOAuth();
-                    return;
-                }
-                mainActivityView.setTweets(response.body());
+
             }
 
             @Override
-            public void onFailure(Call<List<Tweet>> call, Throwable t)
+            public void onError(Throwable e)
             {
-                mainActivityView.requestFailed();
-                Timber.d("test");
+                getOAuth();
+            }
+
+            @Override
+            public void onNext(List<Tweet> tweets)
+            {
+                mainActivityView.setTweets(tweets);
             }
         });
     }
