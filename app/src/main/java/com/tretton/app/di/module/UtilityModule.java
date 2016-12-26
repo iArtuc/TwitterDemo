@@ -9,7 +9,6 @@ import com.tretton.app.BaseApplication;
 import com.tretton.app.BuildConfig;
 import com.tretton.app.BusinessService;
 import com.tretton.app.di.Names;
-import com.tretton.app.restservice.RestService;
 import com.tretton.app.util.SharedPreferencesManager;
 
 import java.util.concurrent.Executors;

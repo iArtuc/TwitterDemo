@@ -15,7 +15,7 @@ public class ActivityPresenterModule
 {
     @Provides
     @ActivityScope
-    public MainActivityPresenter provideMainActivityPresenter(RestService restService,SharedPreferencesManager sharedPreferencesManager)
+    public MainActivityPresenter provideMainActivityPresenter(RestService restService, SharedPreferencesManager sharedPreferencesManager)
     {
         return new MainActivityPresenterImpl(restService, sharedPreferencesManager);
     }

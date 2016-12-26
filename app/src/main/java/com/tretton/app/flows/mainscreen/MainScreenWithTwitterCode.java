@@ -5,12 +5,8 @@ import android.widget.ListView;
 
 import com.tretton.app.R;
 import com.tretton.app.base.BaseAppCompatActivity;
-import com.tretton.app.flows.mainscreen.presenter.MainActivityPresenter;
-import com.tretton.app.flows.mainscreen.view.MainActivityView;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 
