@@ -28,7 +28,7 @@ android {
         unitTests.returnDefaultValues = true
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.tretton.app"
         minSdkVersion 15

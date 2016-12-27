@@ -6,6 +6,18 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.is;
+import static android.support.test.espresso.Espresso.*;
+import static org.hamcrest.Matchers.not;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import com.tretton.app.flows.mainscreen.MainActivity;
 
 import org.junit.Rule;
@@ -16,6 +28,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.matches;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -49,5 +62,30 @@ public class ExampleInstrumentedTest
     {
         onView(withId(R.id.rv_activity_main_tweet_list)).check(new RecyclerViewItemCountAssertion
                 (20));
+    }
+
+    @Test
+    public void checkIfFragmentDisplayed()
+    {
+        clickOnItem();
+        onView(withText("RETWEETS")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void checkIfBackWorksOnFragment(){
+        checkIfFragmentDisplayed();
+        pressBack();
+        onView(withId(R.id.rv_activity_main_tweet_list)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv_activity_main_tweet_list))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+
+    }
+    @Test
+    public void clickAllItemsOnRecyvlerView(){
+        for(int i = 0; i <20;i++){
+            onView(withId(R.id.rv_activity_main_tweet_list))
+                    .perform(RecyclerViewActions.actionOnItemAtPosition(i, click()));
+            pressBack();
+        }
     }
 }
